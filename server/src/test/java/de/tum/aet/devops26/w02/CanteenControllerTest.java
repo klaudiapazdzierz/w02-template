@@ -52,10 +52,13 @@ public class CanteenControllerTest {
         when(clock.getZone()).thenReturn(ZoneOffset.UTC);
     }
 
-    @Test
-    public void testGetTodayMeals_ReturnsNoContent_WhenNoMealsAvailable() throws Exception {
-         // TODO implement this test
-    }
+ @Test
+public void testGetTodayMeals_ReturnsNoContent_WhenNoMealsAvailable() throws Exception {
+ // Mock the API response
+ when(restTemplate.getForObject(anyString(), eq(Week.class))).thenReturn(new Week(15, 2024, List.of()));
+ // Act & Assert
+ getList("/{canteenName}/today", HttpStatus.NO_CONTENT, Dish.class, "mensa-garching");
+}
 
     @Test
     public void testGetTodayMeals_ReturnsOkWithMeals() throws Exception {
